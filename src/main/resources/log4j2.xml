@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" name="MyApp">
+    <Appenders>
+
+        <RollingFile name="dailyRollingFileAppender"
+                     fileName="./log/app.log"
+                     filePattern="./logs/server.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout pattern="[%-5level]%d{yyyy-MM-dd HH:mm:ss}%n[%l]%n%msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level]%d{yyyy-MM-dd HH:mm:ss}%n[%l]%n%msg%n" />
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="DEBUG" additivity="false" >
+            <appender-ref ref="console" />
+            <appender-ref ref="dailyRollingFileAppender" />
+        </Root>
+
+        <logger name="DEBUG_LOGGER" level="DEBUG" additivity="false" >
+            <appender-ref ref="console" />
+            <!--<appender-ref ref="dailyRollingFileAppender" />-->
+        </logger>
+
+        <logger name="PRODUCTION_LOGGER" level="WARN" additivity="false" >
+            <!--<appender-ref ref="console" />-->
+            <appender-ref ref="dailyRollingFileAppender" />
+        </logger>
+
+    </Loggers>
+</Configuration>
